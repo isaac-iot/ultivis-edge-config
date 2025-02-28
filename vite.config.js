@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   const baseUrl = env.VITE_BASE_URL;
   const httpProxyTarget = `https://${env.VITE_PROXY}`;
   const wsProxyTarget = `ws://${env.VITE_PROXY}`;
+  // 백엔드 주소 (fast-api)
+  const appProxyTarget = `http://${env.VITE_APP_PROXY}`;
 
   return {
     base: baseUrl,
@@ -73,6 +75,12 @@ export default defineConfig(({ mode }) => {
         "/notification/realtime": {
           target: wsProxyTarget,
           ws: true,
+        },
+        "/api": {
+          target: appProxyTarget,
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ""),
         },
         "^/": {
           target: httpProxyTarget,
