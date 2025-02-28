@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import {
   Layout,
@@ -17,7 +17,10 @@ import {
   useDeviceTree,
   useRoleStore,
   HomeIcon,
-} from "@ultivis/library";
+  NetworkIcon,
+  TimeSyncIcon,
+  SettingIcon,
+} from '@ultivis/library';
 
 const Main = () => {
   const [authApp, setAuthApp] = useState([]);
@@ -32,17 +35,10 @@ const Main = () => {
 
   const depth = 0;
 
-  const {
-    initRoles,
-    roles,
-    setAccess,
-    checkRole,
-    addAccessedDashboardId,
-    hasAccessedDashboardId,
-  } = useRoleStore();
+  const { initRoles, roles, setAccess, checkRole, addAccessedDashboardId, hasAccessedDashboardId } = useRoleStore();
 
   const { data } = useSuspenseQuery({
-    queryKey: ["device", sourceId],
+    queryKey: ['device', sourceId],
     staleTime: Infinity,
     queryFn: () => getInventory(sourceId),
   });
@@ -59,20 +55,24 @@ const Main = () => {
   useEffect(() => {
     if (applications) {
       const filteredApps = applications.data
-        .filter(
-          (app) =>
-            app.type !== "MICROSERVICE" && app.manifest?.noAppSwitcher !== true
-        )
-        .sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        );
+        .filter((app) => app.type !== 'MICROSERVICE' && app.manifest?.noAppSwitcher !== true)
+        .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       setAuthApp(filteredApps);
     }
   }, [applications]);
 
   // 페이지 제목
   const pageTitle = () => {
-    return t("home");
+    switch (pathname) {
+      case '/':
+        return t('home');
+      case '/network':
+        return t('Network');
+      case '/timesync':
+        return t('TimeSync');
+      default:
+        return t('home');
+    }
   };
 
   // 선언된 사이드바 아이템들을 가져와서 표시하는 기능
@@ -90,7 +90,7 @@ const Main = () => {
     };
 
     const manageAccess = async (id) => {
-      if (!hasAccessedDashboardId(id) && pathname.includes("/dashboard/")) {
+      if (!hasAccessedDashboardId(id) && pathname.includes('/dashboard/')) {
         try {
           await putInventory({ id });
 
@@ -106,10 +106,7 @@ const Main = () => {
     };
     init();
 
-    if (
-      !checkRole("ROLE_INVENTORY_ADMIN") ||
-      !checkRole("ROLE_INVENTORY_CREATE")
-    ) {
+    if (!checkRole('ROLE_INVENTORY_ADMIN') || !checkRole('ROLE_INVENTORY_CREATE')) {
       if (dashboardId) {
         manageAccess(dashboardId);
       } else {
@@ -132,19 +129,13 @@ const Main = () => {
       }
       sidebarItems={
         <>
-          <SidebarItem
-            icon={HomeIcon}
-            label={t("Home")}
-            to="/"
-            className="p-3 dark:text-dark-grayscale-100"
-          />
+          <SidebarItem icon={HomeIcon} label={t('Home')} to="/" className="p-3 dark:text-dark-grayscale-100" />
 
-          <SidebarAccordionItem
-            label={t("Groups")}
-            asChild={<GroupAccordion onlyGroup={true} depth={depth + 1} />}
-            depth={depth}
-            className="dark:text-dark-grayscale-100"
-          />
+          <SidebarAccordionItem label={t('Groups')} asChild={<GroupAccordion onlyGroup={true} depth={depth + 1} />} depth={depth} className="dark:text-dark-grayscale-100" />
+          <SidebarItem icon={NetworkIcon} label={t('Network')} to="/network" className="p-3 dark:text-dark-grayscale-100" />
+          <SidebarItem icon={TimeSyncIcon} label={t('Time Sync')} to="/timesync" className="p-3 dark:text-dark-grayscale-100" />
+          <SidebarItem icon={SettingIcon} label={t('Tedge Config')} to="/tedge" className="p-3 dark:text-dark-grayscale-100" />
+          <SidebarItem icon={SettingIcon} label={t('Tedge Services')} to="/tedgeservices" className="p-3 dark:text-dark-grayscale-100" />
         </>
       }
     />
