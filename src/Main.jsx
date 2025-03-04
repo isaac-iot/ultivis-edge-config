@@ -69,7 +69,7 @@ const Main = () => {
       case '/network':
         return t('Network');
       case '/timesync':
-        return t('TimeSync');
+        return t('Time Synchronization');
       default:
         return t('home');
     }
