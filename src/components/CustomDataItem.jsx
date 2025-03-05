@@ -269,6 +269,7 @@ const CustomDataItem = ({ id, data }) => {
 
                 <div className="flex flex-row justify-end space-x-4 pt-4">
                   <Button
+                    type="button"
                     variant="destructive"
                     onClick={() => reset(defaultData)}
                   >

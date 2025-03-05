@@ -109,7 +109,7 @@ const CustomDialog = ({ id, isOpen, onClose, data, onUpdate }) => {
               </Select>
             </div>
             {/* ROI Points */}
-            <div className="mt-4">
+            <div className="mt-4 hidden">
               <Label>{t("points")}</Label>
               <Input
                 type="text"
@@ -120,10 +120,10 @@ const CustomDialog = ({ id, isOpen, onClose, data, onUpdate }) => {
         </div>
 
         <DialogFooter>
-          <Button variant="destructive" onClick={handleCancel}>
+          <Button variant="destructive" type="button" onClick={handleCancel}>
             {t("cancel")}
           </Button>
-          <Button variant="primary" onClick={handleSave}>
+          <Button variant="primary" type="button" onClick={handleSave}>
             {t("save")}
           </Button>
         </DialogFooter>

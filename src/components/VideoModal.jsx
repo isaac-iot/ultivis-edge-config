@@ -100,7 +100,7 @@ const VideoModal = ({ id, isOpen, onClose, url, protocol }) => {
           )}
         </div>
         <DialogFooter>
-          <Button variant="destructive" onClick={handleClose}>
+          <Button variant="destructive" type="button" onClick={handleClose}>
             {t("close")}
           </Button>
         </DialogFooter>
