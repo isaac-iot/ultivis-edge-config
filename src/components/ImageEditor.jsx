@@ -1,6 +1,19 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Stage, Layer, Line, Rect, Image } from "react-konva";
-import { useTranslation } from "@ultivis/library";
+import { useToast, useTranslation } from "@ultivis/library";
+
+// TODO 추후 기준값 옵션으로 추가할예정
+const adjustCoordinates = (x, y) => {
+  // x, y 좌표가 0~1 범위 내에서 벗어나지 않도록 보정
+  x = Math.min(Math.max(x, 0), 1);
+  y = Math.min(Math.max(y, 0), 1);
+
+  // 0.98 이상일 경우 1로, 0.02 이하일 경우 0으로 보정
+  x = x >= 0.98 ? 1 : x <= 0.02 ? 0 : x;
+  y = y >= 0.98 ? 1 : y <= 0.02 ? 0 : y;
+
+  return [x, y];
+};
 
 const ImageEditor = ({ imageSrc, data, onUpdate }) => {
   const { t } = useTranslation();
@@ -10,6 +23,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
   const [drawing, setDrawing] = useState(false);
   const [newPoints, setNewPoints] = useState([]); // 새로 그려지는 points
   const [selectedType, setSelectedType] = useState(data.type || "none");
+  const { toast } = useToast();
 
   // 이미지 로드 및 비율 계산
   const [image, setImage] = useState(null);
@@ -65,17 +79,24 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
   // 마우스 액션 처리 (드로잉 시작)
   const handleMouseDown = (e) => {
     if (selectedType === "none") {
-      alert("Please select a type before drawing.");
+      toast({
+        title: t(`Please select a type before drawing.`),
+        duration: 3000,
+        variant: "destructive",
+      });
+
       return;
     }
     setDrawing(true);
 
     const stage = stageRef.current.getStage();
     const pointer = stage.getPointerPosition();
-    const normalizedStart = [
+    let normalizedStart = [
       pointer.x / dimensions.width,
       pointer.y / dimensions.height,
     ];
+    // 조정된 좌표
+    normalizedStart = adjustCoordinates(normalizedStart[0], normalizedStart[1]);
 
     setNewPoints((prevPoints) => [...prevPoints, normalizedStart]); // 첫 번째 점을 추가
   };
@@ -86,10 +107,13 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
 
     const stage = stageRef.current.getStage();
     const pointer = stage.getPointerPosition();
-    const normalizedEnd = [
+    let normalizedEnd = [
       pointer.x / dimensions.width,
       pointer.y / dimensions.height,
     ];
+
+    // 조정된 좌표
+    normalizedEnd = adjustCoordinates(normalizedEnd[0], normalizedEnd[1]);
 
     if (selectedType === "polygon") {
       setNewPoints((prev) => [...prev.slice(0, -1), normalizedEnd]); // 마지막 점만 업데이트
@@ -123,11 +147,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full bg-gray-200"
-      style={{ position: "relative" }}
-    >
+    <div ref={containerRef} className="relative w-full bg-gray-200">
       <Stage
         ref={stageRef}
         width={dimensions.width}
@@ -167,7 +187,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
           {selectedType === "polygon" && normalizedPoints.length > 2 && (
             <Line
               points={normalizedPoints.flat()}
-              stroke="green"
+              stroke="yellow"
               strokeWidth={2}
               closed
             />
@@ -200,7 +220,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
           {newPoints.length > 2 && selectedType === "polygon" && (
             <Line
               points={denormalizePoints(newPoints).flat()}
-              stroke="green"
+              stroke="yellow"
               strokeWidth={2}
               closed
             />

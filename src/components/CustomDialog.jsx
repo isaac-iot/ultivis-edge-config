@@ -41,28 +41,6 @@ const CustomDialog = ({ id, isOpen, onClose, data, onUpdate }) => {
     { name: "None", value: "none" },
   ];
 
-  // ROI type 변경 처리
-  const handleTypeChange = (value) => {
-    setCurrentData({
-      ...currentData,
-      type: value === "none" ? "" : value,
-    });
-  };
-
-  // Points 값 변경 처리
-  const handlePointsChange = (value) => {
-    try {
-      debugger;
-      const parsedPoints = JSON.parse(value);
-      setCurrentData({
-        ...currentData,
-        points: parsedPoints,
-      });
-    } catch (error) {
-      console.error("Invalid JSON format for Points");
-    }
-  };
-
   // 취소 버튼 클릭 시 원래 데이터로 복원
   const handleCancel = () => {
     setCurrentData(data); // 원본 data로 상태 복원
@@ -71,7 +49,7 @@ const CustomDialog = ({ id, isOpen, onClose, data, onUpdate }) => {
 
   // 저장 버튼 클릭 시 업데이트
   const handleSave = () => {
-    onUpdate("roi", currentData); // 수정된 currentData를 부모에게 전달
+    onUpdate(currentData);
     onClose(); // 다이얼로그 닫기
   };
 
@@ -79,7 +57,12 @@ const CustomDialog = ({ id, isOpen, onClose, data, onUpdate }) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="!max-w-[45rem]">
         <DialogHeader>
-          <DialogTitle>ROI Configuration</DialogTitle>
+          <DialogTitle>{t(`ROI Configuration`)}</DialogTitle>
+          <p className="text-gray-500 text-m">
+            {t(`* If the image is not visible or if it differs from the captured
+            image of the camera's view, please check the camera URL connection
+            on the previous page.`)}{" "}
+          </p>
         </DialogHeader>
 
         {/* ROI Form */}
@@ -92,7 +75,7 @@ const CustomDialog = ({ id, isOpen, onClose, data, onUpdate }) => {
               onUpdate={setCurrentData}
             />
           ) : (
-            <p className="text-gray-500">No ROI image available.</p>
+            <p className="text-gray-500">{t(`No ROI image available.`)}</p>
           )}
 
           {/* ROI Type */}
