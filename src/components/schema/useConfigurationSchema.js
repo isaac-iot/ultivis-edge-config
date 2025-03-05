@@ -1,33 +1,60 @@
+// useConfigurationSchema.js
+import { useTranslation } from "@ultivis/library";
 import { z } from "zod";
-import { useTranslation } from "react-i18next";
 
 export const useConfigurationSchema = () => {
   const { t } = useTranslation();
 
-  // IP 주소 유효성 검사용 정규식
-  const ipv4Regex =
-    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  const configurationSchema = z
+    .object({
+      label: z.string().optional(),
+      protocol: z.enum(["", "hls", "rtsp"]),
+      url: z.string().optional(),
+      active: z.boolean(),
+      roi: z.object({
+        enable: z.boolean(),
+        type: z.string().optional(),
+        points: z.array(z.array(z.number())).optional(),
+      }),
+    })
+    .superRefine(({ url, protocol, roi }, ctx) => {
+      // URL validation (already existing logic)
+      if (protocol === "" && url !== "") {
+        ctx.addIssue({
+          path: ["url"],
+          message: "URL must be empty when protocol is empty",
+          code: z.ZodIssueCode.custom,
+        });
+      }
 
-  // Zod를 통한 IPv4 유효성 검사 함수
-  const ipSchema = () =>
-    z.string().refine((val) => ipv4Regex.test(val), {
-      message: t("Invalid IPv4 address"),
+      if (protocol === "hls" && !/^https?:\/\//.test(url || "")) {
+        ctx.addIssue({
+          path: ["url"],
+          message: "URL must be a valid HTTP/HTTPS URL",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+
+      if (protocol === "rtsp" && !/^rtsp:\/\//.test(url || "")) {
+        ctx.addIssue({
+          path: ["url"],
+          message: "URL must be a valid RTSP URL",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+
+      // ROI validation: enable이 true일 때만 validate
+      if (roi?.enable) {
+        // type이 없거나 points가 빈 배열일 때 에러 발생
+        if (!roi?.type || (roi?.points && roi?.points.length === 0)) {
+          ctx.addIssue({
+            path: ["roi"], // 에러 메시지를 'type' 필드에 추가
+            message: "ROI type and area must be specified",
+            code: z.ZodIssueCode.custom,
+          });
+        }
+      }
     });
 
-  // URL 유효성 검사
-  const urlSchema = () => z.string().url({ message: t("Invalid URL format") });
-
-  // IPv4, RTSP, 또는 URL 중 하나일 수 있음
-  const ipOrUrl = () => z.union([ipSchema(), urlSchema()]);
-
-  const numericStringSchema = () =>
-    z.string().refine((val) => !isNaN(Number(val)), {
-      message: t("Must be a numeric string"), // 오류 메시지
-    });
-
-  const configurationSchema = z.object({
-    cameras: z.any(), // 어떤 값도 허용
-  });
-
-  return configurationSchema;
+  return configurationSchema; // Return schema
 };
