@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Stage, Layer, Line, Rect, Image } from "react-konva";
-import { useToast, useTranslation } from "@ultivis/library";
+import { Button, useToast, useTranslation } from "@ultivis/library";
 
 // TODO 추후 기준값 옵션으로 추가할예정
 const adjustCoordinates = (x, y) => {
@@ -229,12 +229,13 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
       </Stage>
 
       {/* Reset 버튼 */}
-      <button
+      <Button
+        type="button"
         onClick={handleReset}
         className="absolute bottom-2 right-2 px-3 py-1 bg-red-500 text-white rounded"
       >
         {t("reset")}
-      </button>
+      </Button>
     </div>
   );
 };
