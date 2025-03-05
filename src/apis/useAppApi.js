@@ -41,6 +41,80 @@ export const useAppApi = () => {
           return null;
         }
       },
+      getStream: async (cameraId, url, protocol) => {
+        try {
+          const requestData = {
+            [cameraId]: {
+              url: url,
+              protocol: protocol,
+            },
+          };
+
+          const response = await fetch(`${appProxyTarget}/config/get_stream`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error("Error fetching stream:", error);
+          throw error;
+        }
+      },
+
+      closeStream: async () => {
+        try {
+          const response = await fetch(
+            `${appProxyTarget}/config/close_stream`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error("Error closing stream:", error);
+          throw error;
+        }
+      },
+
+      updateCamera: async (cameraId, requestData) => {
+        try {
+          const response = await fetch(
+            `${appProxyTarget}/config/cameras/${cameraId}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestData),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error("Error closing stream:", error);
+          throw error;
+        }
+      },
     }),
     []
   );
