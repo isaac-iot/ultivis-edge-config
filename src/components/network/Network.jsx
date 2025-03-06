@@ -4,12 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useConfigurationSchema } from './schema/useConfigurationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { useApi } from '../../apis/useAppApi';
+import { useAppApi } from '../../apis/useAppApi';
 
 const Network = () => {
   const { t } = useTranslation();
   const configurationSchema = useConfigurationSchema();
-  const { getNetworkConfig, updateNetworkConfig } = useApi();
+  const { getNetworkConfig, updateNetworkConfig } = useAppApi();
 
   // Form 기본 설정
   const methods = useForm({
