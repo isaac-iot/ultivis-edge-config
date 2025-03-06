@@ -7,14 +7,13 @@ export const useTimeSyncSchema = () => {
   return z.object({
     timeSync: z.object({
       enabled: z.boolean(),
-      interval: z.coerce.number(),
       servers: z
         .array(
           z
             .string()
             .min(1, { message: 'NTP server is required' })
             .refine((value) => ipv4Regex.test(value) || domainRegex.test(value), {
-              message: 'Invalid format. Please enter a valid IPv4 address (ex: 000.000.000.000) or domain name (ex: ntp.example.com)',
+              message: 'Invalid format. Please enter a valid IPv4 address (ex: 000.000.000.000) or domain name (ex: ntp.ubuntu.com)',
             })
         )
         .min(1, { message: 'At least one NTP server is required' }),

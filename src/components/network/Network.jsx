@@ -3,12 +3,13 @@ import { Button, Form, FormInputField, useCustomMutation, useTranslation } from 
 import { useQuery } from '@tanstack/react-query';
 import { useConfigurationSchema } from './schema/useConfigurationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { useEffect } from 'react';
+import { useApi } from '../../apis/useAppApi';
 
 const Network = () => {
   const { t } = useTranslation();
   const configurationSchema = useConfigurationSchema();
+  const { getNetworkConfig, updateNetworkConfig } = useApi();
 
   // Form 기본 설정
   const methods = useForm({
@@ -29,10 +30,7 @@ const Network = () => {
   // 네트워크 설정 가져오기
   const { data, isError, error, isSuccess } = useQuery({
     queryKey: ['configuration', 'network'],
-    queryFn: async () => {
-      const result = await axios.get('/api/network');
-      return result.data;
-    },
+    queryFn: getNetworkConfig,
     retry: false,
   });
 
@@ -50,10 +48,7 @@ const Network = () => {
   // 네트워크 설정 저장
   const postNetworkConfig = useCustomMutation({
     queryKey: ['configuration', 'network'],
-    mutationFn: async (data) => {
-      const result = await axios.post('/api/network', { ...data });
-      return result.data;
-    },
+    mutationFn: updateNetworkConfig,
     successMessage: () => `Success to save configuration`,
     errorMessage: () => `Failed to save configuration`,
   });
