@@ -9,6 +9,7 @@ import {
 } from "@ultivis/library";
 
 import Text from "./Text";
+import Configurations from "./Configurations";
 
 const Main = lazy(() => import("./Main"));
 const Groups = lazy(() => import("./Groups"));
@@ -42,6 +43,10 @@ export const router = createHashRouter([
             />
           </>
         ),
+      },
+      {
+        path: "/config",
+        element: <Configurations />,
       },
       {
         path: "/group/:groupId",
