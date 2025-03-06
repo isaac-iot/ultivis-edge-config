@@ -24,8 +24,11 @@ const VideoModal = ({ id, isOpen, onClose, url, protocol }) => {
         setStatus({ loading: true, exist: false });
         try {
           const data = await getStream(id, url, protocol);
-          setStreamUrl(data.stream_url);
-          setStatus({ loading: false, exist: true });
+          // 일정 시간 대기 후 streamUrl을 설정
+          setTimeout(() => {
+            setStreamUrl(data.stream_url);
+            setStatus({ loading: false, exist: true });
+          }, 3000); // 초 대기 후 URL 설정
         } catch (error) {
           console.error("Error fetching stream:", error);
           setStatus({ loading: false, exist: false });
@@ -69,12 +72,12 @@ const VideoModal = ({ id, isOpen, onClose, url, protocol }) => {
   // Cleanup
   const handleClose = async () => {
     // todo 아래 try-catch는 강제로 close ffmpeg 프로세스 하는 것
-    // try {
-    //   await closeStream();
-    //   console.log("Stream closed successfully");
-    // } catch (error) {
-    //   console.error("Error closing stream:", error);
-    // }
+    try {
+      await closeStream();
+      console.log("Stream closed successfully");
+    } catch (error) {
+      console.error("Error closing stream:", error);
+    }
 
     if (onClose) {
       onClose(); // Ensure onClose is called to close the modal

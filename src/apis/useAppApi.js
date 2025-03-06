@@ -26,11 +26,21 @@ export const useAppApi = () => {
           throw error;
         }
       },
-      getROIImage: async (streamId) => {
+      getROIImage: async (cameraId, url, refresh = false) => {
         try {
-          const response = await fetch(
-            `${appProxyTarget}/config/roi?camera_id=${streamId}`
-          );
+          const requestData = {
+            camera_id: cameraId,
+            url: url,
+            refresh: refresh,
+          };
+
+          const response = await fetch(`${appProxyTarget}/config/roi`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+          });
           if (!response.ok)
             throw new Error(`HTTP error! Status: ${response.status}`);
 

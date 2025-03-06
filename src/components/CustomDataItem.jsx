@@ -152,8 +152,9 @@ const CustomDataItem = ({ id, data }) => {
                       value={protocol || "none"}
                       onValueChange={(value) => {
                         setValue("protocol", value === "none" ? "" : value);
-                        if (value === "none") {
-                          setValue("url", ""); // ⬅ protocol이 "none"이면 url도 ""로 초기화
+                        setValue("url", "");
+
+                        if (errors.url) {
                           clearErrors("url");
                         }
                       }}
@@ -196,7 +197,7 @@ const CustomDataItem = ({ id, data }) => {
                   <div className="flex flex-col justify-between h-[80px] mt-9">
                     <Button
                       type="button"
-                      disabled={protocol === "" || url === ""}
+                      disabled={protocol === "" || url === "" || !!errors.url}
                       onClick={() => setIsVideoOpen(true)}
                     >
                       {t("check")}
@@ -259,6 +260,7 @@ const CustomDataItem = ({ id, data }) => {
                       isOpen={isDialogOpen}
                       onClose={() => setIsDialogOpen(false)}
                       data={watch("roi")}
+                      url={url}
                       onUpdate={updateROIField}
                     />
                   </div>

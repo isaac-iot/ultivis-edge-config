@@ -39,7 +39,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
 
         setDimensions({
           width: 640,
-          height: 640, // new_height 을 쓰면 비율에 높이를 맞춘 버전
+          height: newHeight, // new_height 을 쓰면 비율에 높이를 맞춘 버전
         });
         setImage(img); // 이미지 상태 업데이트
       };
@@ -232,7 +232,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
       <Button
         type="button"
         onClick={handleReset}
-        className="absolute bottom-2 right-2 px-3 py-1 bg-red-500 text-white rounded"
+        className="absolute bottom-2 right-2 bg-red-500 text-white rounded"
       >
         {t("reset")}
       </Button>
