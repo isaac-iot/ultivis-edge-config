@@ -11,9 +11,7 @@ const CameraSettingsTable = ({ data }) => {
           <CustomDataItem key={cameraId} id={cameraId} data={cameraData} />
         ))
       ) : (
-        <p className="text-center text-gray-500">
-          {t(`No cameras available.`)}
-        </p>
+        <p className="text-center text-gray-500">{t(`no cameras available`)}</p>
       )}
     </div>
   );

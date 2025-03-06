@@ -72,7 +72,7 @@ const CustomDataItem = ({ id, data }) => {
   const onSubmit = async (formData) => {
     if (!formData) {
       toast({
-        title: t(`Error! No data to save.`),
+        title: t(`no data to save`),
         duration: 3000,
         variant: "destructive",
       });
@@ -80,18 +80,18 @@ const CustomDataItem = ({ id, data }) => {
     try {
       const response = await updateCamera(id, formData); // Use updateCamera function to submit data
       toast({
-        title: t(`Settings updated successfully!`),
+        title: t(`updated successfully`),
         duration: 3000,
         variant: "success",
       });
       setIsCollapse(false);
     } catch (error) {
       toast({
-        title: t(`Error updating settings`),
+        title: t(`error updating settings`),
         duration: 3000,
         variant: "destructive",
       });
-      console.error("Error updating settings:", error);
+      console.error("error updating settings:", error);
     }
   };
 
@@ -160,7 +160,7 @@ const CustomDataItem = ({ id, data }) => {
                       }}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={t("Select Protocol")} />
+                        <SelectValue placeholder={t("select protocol")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>

@@ -75,9 +75,7 @@ const CustomDialog = ({ id, isOpen, onClose, data, url, onUpdate }) => {
           <DialogTitle>{t(`ROI Configuration`)} </DialogTitle>
           <div className="px-4">
             <p className="text-gray-500 text-m italic">
-              {t(
-                `* If the image is not visible or the captured frame from the camera is not as expected, please click the refresh button.`
-              )}
+              {t(`please click the refresh button`)}
             </p>{" "}
             <div className="flex justify-end w-full">
               <Button type="button" onClick={handleRefresh}>
@@ -142,7 +140,7 @@ const CustomDialog = ({ id, isOpen, onClose, data, url, onUpdate }) => {
             </div>
           ) : (
             <p className="text-center text-gray-500 text-m">
-              {t(`No ROI image available.`)}
+              {t(`no ROI image available`)}
             </p>
           )}
         </div>

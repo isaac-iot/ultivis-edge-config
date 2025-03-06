@@ -80,7 +80,7 @@ const ImageEditor = ({ imageSrc, data, onUpdate }) => {
   const handleMouseDown = (e) => {
     if (selectedType === "none") {
       toast({
-        title: t(`Please select a type before drawing.`),
+        title: t(`please select a type before drawing`),
         duration: 3000,
         variant: "destructive",
       });

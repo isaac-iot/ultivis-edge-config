@@ -59,7 +59,7 @@ const Main = () => {
           />
           <SidebarItem
             icon={SettingIcon}
-            label={t("Camera Config")}
+            label={t("camera config")}
             to="/config"
             className="p-3 dark:text-dark-grayscale-100"
           />

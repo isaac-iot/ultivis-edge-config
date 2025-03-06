@@ -88,7 +88,7 @@ const VideoModal = ({ id, isOpen, onClose, url, protocol }) => {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="!max-w-[45rem]">
         <DialogHeader>
-          <DialogTitle>{t(`Video Stream`)}</DialogTitle>
+          <DialogTitle>{t(`video stream`)}</DialogTitle>
         </DialogHeader>
 
         <div className="relative w-full overflow-hidden min-h-[20em]">
