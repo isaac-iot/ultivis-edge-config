@@ -52,7 +52,7 @@ const TimeSync = () => {
 
   // 저장 버튼으로 시간 동기화 설정 저장
   const handleSubmit = (data) => {
-    const isConfirmed = window.confirm(t('Changing the time settings will affect system operations. Do you want to continue?'));
+    const isConfirmed = window.confirm(t('Changing the settings will affect system operations. Do you want to continue?'));
     if (isConfirmed) {
       postTimeSyncConfig(data);
     }
