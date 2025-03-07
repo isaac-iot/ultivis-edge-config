@@ -19,7 +19,9 @@ import {
   HomeIcon,
   NetworkIcon,
   TimeSyncIcon,
+  SettingIcon,
 } from '@ultivis/library';
+import SettingsAccordion from './components/SettingsAccordion';
 
 const Main = () => {
   const [authApp, setAuthApp] = useState([]);
@@ -131,8 +133,14 @@ const Main = () => {
           <SidebarItem icon={HomeIcon} label={t('Home')} to="/" className="p-3 dark:text-dark-grayscale-100" />
 
           <SidebarAccordionItem label={t('Groups')} asChild={<GroupAccordion onlyGroup={true} depth={depth + 1} />} depth={depth} className="dark:text-dark-grayscale-100" />
-          <SidebarItem icon={NetworkIcon} label={t('Network')} to="/network" className="p-3 dark:text-dark-grayscale-100" />
-          <SidebarItem icon={TimeSyncIcon} label={t('Time Sync')} to="/timesync" className="p-3 dark:text-dark-grayscale-100" />
+          <SidebarAccordionItem
+            icon={SettingIcon}
+            label={t('configuration')}
+            asChild={<SettingsAccordion />}
+            onlyGroup={false}
+            depth={depth}
+            className="dark:text-dark-grayscale-100"
+          />
         </>
       }
     />
