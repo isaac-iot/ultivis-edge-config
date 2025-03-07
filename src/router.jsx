@@ -3,6 +3,7 @@ import { createHashRouter } from 'react-router-dom';
 import { UltivisDeviceProvider, MenuBar, ContextDashboard, StaticDashboard, NotFound } from '@ultivis/library';
 
 import Text from './Text';
+import Configurations from './Configurations';
 
 const Main = lazy(() => import('./Main'));
 const Groups = lazy(() => import('./Groups'));
@@ -38,6 +39,10 @@ export const router = createHashRouter([
             />
           </>
         ),
+      },
+      {
+        path: '/config',
+        element: <Configurations />,
       },
       {
         path: '/network',

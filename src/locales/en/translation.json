@@ -1,1 +1,22 @@
-{}
+{
+  "protocol": "프로토콜",
+  "roi": "ROI(Region Of Interest)",
+  "HLS": "HLS",
+  "RTSP": "RTSP",
+  "check": "확인",
+  "reset": "리셋",
+  "refresh": "새로고침",
+  "please select a type before drawing": "Please select a type before drawing.",
+  "Error! No data to save.": "Error, No data to save.",
+  "Settings updated successfully!": "Settings updated successfully.",
+  "Error updating settings": "Error updating settings.",
+  "ROI Configuration": "ROI Configuration",
+  "* If the image is not visible or the captured frame from the camera is not as expected, please click the refresh button.": "* If the image is not visible or the captured frame from the camera is not as expected, please click the refresh button.",
+  "No ROI image available.": "No ROI image available.",
+  "Select Protocol": "Select Protocol",
+  "points": "Points",
+  "No cameras available.": "No cameras available.",
+  "Video Stream": "Video Stream",
+  "ROI type and area must be specified": "ROI type and area must be specified.",
+  "Camera Config": "Camera Config"
+}

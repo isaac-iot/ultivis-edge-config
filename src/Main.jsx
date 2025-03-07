@@ -17,8 +17,6 @@ import {
   useDeviceTree,
   useRoleStore,
   HomeIcon,
-  NetworkIcon,
-  TimeSyncIcon,
   SettingIcon,
 } from '@ultivis/library';
 import SettingsAccordion from './components/SettingsAccordion';
@@ -27,11 +25,6 @@ const Main = () => {
   const [authApp, setAuthApp] = useState([]);
   const { applications } = useAuth();
   const { t } = useTranslation();
-
-  const { manageRole, getInventory, putInventory } = useApi();
-  const { dashboardId, sourceId } = useRoutingContext();
-
-  const isMounted = useRef(false);
   const { pathname } = useLocation();
 
   const depth = 0;
@@ -67,6 +60,8 @@ const Main = () => {
     switch (pathname) {
       case '/':
         return t('home');
+      case '/config':
+        return t('Configuration');
       case '/network':
         return t('Network');
       case '/timesync':
@@ -132,7 +127,7 @@ const Main = () => {
         <>
           <SidebarItem icon={HomeIcon} label={t('Home')} to="/" className="p-3 dark:text-dark-grayscale-100" />
 
-          <SidebarAccordionItem label={t('Groups')} asChild={<GroupAccordion onlyGroup={true} depth={depth + 1} />} depth={depth} className="dark:text-dark-grayscale-100" />
+          <SidebarItem icon={SettingIcon} label={t('configuration')} to="/config" className="p-3 dark:text-dark-grayscale-100" />
           <SidebarAccordionItem
             icon={SettingIcon}
             label={t('configuration')}
@@ -141,6 +136,8 @@ const Main = () => {
             depth={depth}
             className="dark:text-dark-grayscale-100"
           />
+          <SidebarItem icon={HomeIcon} label={t('Home')} to="/" className="p-3 dark:text-dark-grayscale-100" />
+          <SidebarItem icon={SettingIcon} label={t('camera config')} to="/config" className="p-3 dark:text-dark-grayscale-100" />
         </>
       }
     />
