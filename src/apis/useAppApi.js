@@ -10,6 +10,50 @@ export const useAppApi = () => {
 
   const apiMethods = useMemo(
     () => ({
+      getModelList: async () => {
+        try {
+          const response = await fetch(`${appProxyTarget}/config/service`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return await response.json();
+        } catch (error) {
+          throw error;
+        }
+      },
+      updateModels: async () => {
+        try {
+          const requestData = {
+            selected: selectedList,
+          };
+          debugger;
+
+          const response = await fetch(
+            `${appProxyTarget}/config/service/update`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestData),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error("Error fetching stream:", error);
+          throw error;
+        }
+      },
       getCameraSettings: async () => {
         try {
           const response = await fetch(`${appProxyTarget}/config/cameras`, {
@@ -34,7 +78,7 @@ export const useAppApi = () => {
             refresh: refresh,
           };
 
-          const response = await fetch(`${appProxyTarget}/config/roi`, {
+          const response = await fetch(`${appProxyTarget}/hls/roi`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -60,7 +104,7 @@ export const useAppApi = () => {
             },
           };
 
-          const response = await fetch(`${appProxyTarget}/config/get_stream`, {
+          const response = await fetch(`${appProxyTarget}/hls/get_stream`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -81,15 +125,12 @@ export const useAppApi = () => {
 
       closeStream: async () => {
         try {
-          const response = await fetch(
-            `${appProxyTarget}/config/close_stream`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          const response = await fetch(`${appProxyTarget}/hls/close_stream`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
