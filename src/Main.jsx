@@ -41,7 +41,7 @@ const Main = () => {
       case "/":
         return t("home");
       case "/config":
-        return t("Configuration");
+        return t("camera settings");
       case "/network":
         return t("Network");
       case "/timesync":
