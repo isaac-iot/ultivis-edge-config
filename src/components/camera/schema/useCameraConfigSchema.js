@@ -2,10 +2,10 @@
 import { useTranslation } from "@ultivis/library";
 import { z } from "zod";
 
-export const useConfigurationSchema = () => {
+export const useCameraConfigSchema = () => {
   const { t } = useTranslation();
 
-  const configurationSchema = z
+  const cameraConfigSchema = z
     .object({
       label: z.string().optional(),
       protocol: z.enum(["", "hls", "rtsp"]),
@@ -56,5 +56,5 @@ export const useConfigurationSchema = () => {
       }
     });
 
-  return configurationSchema; // Return schema
+  return cameraConfigSchema; // Return schema
 };

@@ -20,7 +20,7 @@ import CustomDialog from "./CustomDialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import VideoModal from "./VideoModal";
-import { useConfigurationSchema } from "../schema/useConfigurationSchema";
+import { useCameraConfigSchema } from "./schema/useCameraConfigSchema";
 
 const protocolOptions = [
   { name: "HLS", value: "hls" },
@@ -32,7 +32,7 @@ const CustomDataItem = ({ id, data }) => {
   const { t } = useTranslation();
   const { updateCamera } = useAppApi();
 
-  const configSchema = useConfigurationSchema();
+  const configSchema = useCameraConfigSchema();
   const { toast } = useToast();
 
   const [isCollapse, setIsCollapse] = useState(false);
