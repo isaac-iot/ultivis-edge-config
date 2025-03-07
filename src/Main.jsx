@@ -1,17 +1,8 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import {
-  Layout,
-  HeaderDivider,
-  SidebarItem,
-  AppSwitcher,
-  UserMenu,
-  useTranslation,
-  useAuth,
-  HomeIcon,
-  SettingIcon,
-} from "@ultivis/library";
+import { Layout, HeaderDivider, SidebarItem, SidebarAccordionItem, AppSwitcher, UserMenu, useTranslation, useAuth, HomeIcon, SettingIcon } from '@ultivis/library';
+import SettingsAccordion from './components/SettingsAccordion';
 
 const Main = () => {
   const [authApp, setAuthApp] = useState([]);
@@ -22,21 +13,26 @@ const Main = () => {
   useEffect(() => {
     if (applications) {
       const filteredApps = applications.data
-        .filter(
-          (app) =>
-            app.type !== "MICROSERVICE" && app.manifest?.noAppSwitcher !== true
-        )
-        .sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        );
+        .filter((app) => app.type !== 'MICROSERVICE' && app.manifest?.noAppSwitcher !== true)
+        .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       setAuthApp(filteredApps);
     }
   }, [applications]);
 
   // 페이지 제목
   const pageTitle = () => {
-    if (pathname === "/config") return t("configuration");
-    return t("home");
+    switch (pathname) {
+      case '/':
+        return t('home');
+      case '/config':
+        return t('Configuration');
+      case '/network':
+        return t('Network');
+      case '/timesync':
+        return t('Time Synchronization');
+      default:
+        return t('home');
+    }
   };
 
   return (
@@ -51,18 +47,10 @@ const Main = () => {
       }
       sidebarItems={
         <>
-          <SidebarItem
-            icon={HomeIcon}
-            label={t("Home")}
-            to="/"
-            className="p-3 dark:text-dark-grayscale-100"
-          />
-          <SidebarItem
-            icon={SettingIcon}
-            label={t("camera config")}
-            to="/config"
-            className="p-3 dark:text-dark-grayscale-100"
-          />
+          <SidebarItem icon={HomeIcon} label={t('Home')} to="/" className="p-3 dark:text-dark-grayscale-100" />
+
+          <SidebarItem icon={SettingIcon} label={t('camera config')} to="/config" className="p-3 dark:text-dark-grayscale-100" />
+          <SidebarAccordionItem icon={SettingIcon} label={t('configuration')} asChild={<SettingsAccordion />} onlyGroup={false} className="dark:text-dark-grayscale-100" />
         </>
       }
     />
