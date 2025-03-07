@@ -15,12 +15,12 @@ import {
   Form,
   useToast,
 } from "@ultivis/library";
-import { useAppApi } from "../apis/useAppApi";
+import { useAppApi } from "../../apis/useAppApi";
 import CustomDialog from "./CustomDialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import VideoModal from "./VideoModal";
-import { useConfigurationSchema } from "./schema/useConfigurationSchema";
+import { useConfigurationSchema } from "../schema/useConfigurationSchema";
 
 const protocolOptions = [
   { name: "HLS", value: "hls" },
@@ -103,7 +103,7 @@ const CustomDataItem = ({ id, data }) => {
   return (
     <Form>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2 box-border flex items-center justify-between rounded-lg border border-grayscale-600 px-4 py-2.5 dark:border-dark-grayscale-400">
+        <div className="m-2 box-border flex justify-between rounded border border-grayscale-700 px-4 py-2.5 dark:border-dark-grayscale-500">
           <div className="flex h-9 w-full items-center">
             <Switch
               {...register("active")}
@@ -132,7 +132,7 @@ const CustomDataItem = ({ id, data }) => {
         {isCollapse && (
           <>
             <div className="mx-2 mt-[5px] bg-[#fbfbfc] text-xs dark:bg-dark-bg-333">
-              <fieldset className="mb-4 border p-4 text-sm dark:border-dark-grayscale-500">
+              <fieldset className="mb-4 border p-4 text-sm rounded border-grayscale-600  dark:border-dark-grayscale-500">
                 <div className="mb-4">
                   <Label className="mb-2 flex max-w-fit items-center font-semibold leading-5">
                     {t("label")}
@@ -213,7 +213,7 @@ const CustomDataItem = ({ id, data }) => {
                 </div>
 
                 <fieldset
-                  className="mt-1 border text-sm dark:border-dark-grayscale-500"
+                  className="mt-1 border text-sm rounded border-grayscale-600  dark:border-dark-grayscale-500"
                   style={{ padding: "1rem 1rem 0.5rem 1rem" }}
                 >
                   <legend className="text-gray-500 ">{t("ROI")}</legend>
@@ -273,7 +273,10 @@ const CustomDataItem = ({ id, data }) => {
                   <Button
                     type="button"
                     variant="destructive"
-                    onClick={() => reset(defaultData)}
+                    onClick={() => {
+                      reset(defaultData);
+                      setIsCollapse(false);
+                    }}
                   >
                     {t("cancel")}
                   </Button>

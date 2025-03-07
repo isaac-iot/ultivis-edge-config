@@ -10,7 +10,7 @@ import {
   Button,
   Loading,
 } from "@ultivis/library";
-import { useAppApi } from "../apis/useAppApi";
+import { useAppApi } from "../../apis/useAppApi";
 const VideoModal = ({ id, isOpen, onClose, url, protocol }) => {
   const { t } = useTranslation();
   const { getStream, closeStream } = useAppApi();

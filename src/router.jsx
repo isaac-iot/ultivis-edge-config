@@ -2,8 +2,10 @@ import { lazy } from 'react';
 import { createHashRouter } from 'react-router-dom';
 import { UltivisDeviceProvider, MenuBar, ContextDashboard, StaticDashboard, NotFound } from '@ultivis/library';
 
-import Text from './Text';
-import Configurations from './Configurations';
+
+import Text from "./Text";
+import CameraConfig from "./CameraConfig";
+
 
 const Main = lazy(() => import('./Main'));
 const Groups = lazy(() => import('./Groups'));
@@ -41,8 +43,9 @@ export const router = createHashRouter([
         ),
       },
       {
-        path: '/config',
-        element: <Configurations />,
+        path: "/config",
+        element: <CameraConfig />,
+
       },
       {
         path: '/network',

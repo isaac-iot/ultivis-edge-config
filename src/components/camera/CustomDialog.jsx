@@ -17,7 +17,7 @@ import {
   SelectGroup,
   Loading,
 } from "@ultivis/library";
-import { useAppApi } from "../apis/useAppApi";
+import { useAppApi } from "../../apis/useAppApi";
 import ImageEditor from "./ImageEditor";
 
 const CustomDialog = ({ id, isOpen, onClose, data, url, onUpdate }) => {

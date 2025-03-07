@@ -18,5 +18,9 @@
   "no cameras available": "사용 가능한 카메라가 없습니다.",
   "video stream": "비디오 스트림",
   "ROI type and area must be specified": "ROI 유형과 영역을 지정해야 합니다.",
-  "camera config": "카메라 설정"
+  "camera config": "카메라 설정",
+  "no model selected": "모델이 선택되지 않았습니다.",
+  "failed to save": "업데이트에 실패했습니다.",
+  "camera settings": "카메라 설정",
+  "model selection": "모델 선택"
 }
