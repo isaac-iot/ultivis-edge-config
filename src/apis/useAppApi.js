@@ -26,12 +26,11 @@ export const useAppApi = () => {
           throw error;
         }
       },
-      updateModels: async () => {
+      updateModels: async (selectedList) => {
         try {
           const requestData = {
             selected: selectedList,
           };
-          debugger;
 
           const response = await fetch(
             `${appProxyTarget}/config/service/update`,
