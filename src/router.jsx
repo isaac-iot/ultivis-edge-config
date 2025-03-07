@@ -8,8 +8,7 @@ const Main = lazy(() => import('./Main'));
 const Groups = lazy(() => import('./Groups'));
 const Network = lazy(() => import('./components/network/Network'));
 const TimeSync = lazy(() => import('./components/timesync/TimeSync.jsx'));
-const TedgeConfig = lazy(() => import('./components/tedge/TedgeConfig'));
-const TedgeServices = lazy(() => import('./components/tedge/TedgeServices'));
+
 export const router = createHashRouter([
   {
     element: (
@@ -47,14 +46,6 @@ export const router = createHashRouter([
       {
         path: '/timesync',
         element: <TimeSync />,
-      },
-      {
-        path: '/tedge',
-        element: <TedgeConfig />,
-      },
-      {
-        path: '/tedgeservices',
-        element: <TedgeServices />,
       },
       {
         path: '/group/:groupId',

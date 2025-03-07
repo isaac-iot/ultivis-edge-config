@@ -19,7 +19,6 @@ import {
   HomeIcon,
   NetworkIcon,
   TimeSyncIcon,
-  SettingIcon,
 } from '@ultivis/library';
 
 const Main = () => {
@@ -134,8 +133,6 @@ const Main = () => {
           <SidebarAccordionItem label={t('Groups')} asChild={<GroupAccordion onlyGroup={true} depth={depth + 1} />} depth={depth} className="dark:text-dark-grayscale-100" />
           <SidebarItem icon={NetworkIcon} label={t('Network')} to="/network" className="p-3 dark:text-dark-grayscale-100" />
           <SidebarItem icon={TimeSyncIcon} label={t('Time Sync')} to="/timesync" className="p-3 dark:text-dark-grayscale-100" />
-          <SidebarItem icon={SettingIcon} label={t('Tedge Config')} to="/tedge" className="p-3 dark:text-dark-grayscale-100" />
-          <SidebarItem icon={SettingIcon} label={t('Tedge Services')} to="/tedgeservices" className="p-3 dark:text-dark-grayscale-100" />
         </>
       }
     />
