@@ -5,7 +5,7 @@ const appProxyTarget = import.meta.env.VITE_APP_PROXY ? `http://${import.meta.en
 export const useAppApi = () => {
   const apiMethods = useMemo(
     () => ({
-      // Network 관련 API
+      // 네트워크 설정 가져오기
       getNetworkConfig: async () => {
         try {
           const response = await fetch(`${appProxyTarget}/network`, {
@@ -23,6 +23,7 @@ export const useAppApi = () => {
         }
       },
 
+      // 네트워크 설정 업데이트
       updateNetworkConfig: async (data) => {
         try {
           const response = await fetch(`${appProxyTarget}/network`, {
@@ -41,7 +42,7 @@ export const useAppApi = () => {
         }
       },
 
-      // TimeSync 관련 API
+      // 시간 동기화 설정 가져오기
       getTimeSyncConfig: async () => {
         try {
           const response = await fetch(`${appProxyTarget}/time-sync`, {
@@ -59,6 +60,7 @@ export const useAppApi = () => {
         }
       },
 
+      // 시간 동기화 설정 업데이트
       updateTimeSyncConfig: async (data) => {
         try {
           const response = await fetch(`${appProxyTarget}/time-sync`, {
@@ -77,6 +79,7 @@ export const useAppApi = () => {
         }
       },
 
+      // 즉시 시간 동기화
       syncTimeNow: async () => {
         try {
           const response = await fetch(`${appProxyTarget}/time-sync/sync-now`, {
