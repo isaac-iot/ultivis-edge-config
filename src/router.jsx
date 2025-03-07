@@ -1,18 +1,14 @@
-import { lazy } from "react";
-import { createHashRouter } from "react-router-dom";
-import {
-  UltivisDeviceProvider,
-  MenuBar,
-  ContextDashboard,
-  StaticDashboard,
-  NotFound,
-} from "@ultivis/library";
+import { lazy } from 'react';
+import { createHashRouter } from 'react-router-dom';
+import { UltivisDeviceProvider, MenuBar, ContextDashboard, StaticDashboard, NotFound } from '@ultivis/library';
 
-import Text from "./Text";
-import Configurations from "./Configurations";
+import Text from './Text';
+import Configurations from './Configurations';
 
-const Main = lazy(() => import("./Main"));
-const Groups = lazy(() => import("./Groups"));
+const Main = lazy(() => import('./Main'));
+const Groups = lazy(() => import('./Groups'));
+const Network = lazy(() => import('./components/network/Network'));
+const TimeSync = lazy(() => import('./components/timesync/TimeSync.jsx'));
 
 export const router = createHashRouter([
   {
@@ -23,7 +19,7 @@ export const router = createHashRouter([
     ),
     children: [
       {
-        path: "/",
+        path: '/',
         element: (
           <>
             <MenuBar />
@@ -32,7 +28,7 @@ export const router = createHashRouter([
                 {
                   title: `CCTV #4`,
                   content: <Text key="camera_d" text="Hello Widget" />,
-                  i: "d",
+                  i: 'd',
                   x: 2,
                   y: 2,
                   w: 10,
@@ -45,25 +41,33 @@ export const router = createHashRouter([
         ),
       },
       {
-        path: "/config",
+        path: '/config',
         element: <Configurations />,
       },
       {
-        path: "/group/:groupId",
+        path: '/network',
+        element: <Network />,
+      },
+      {
+        path: '/timesync',
+        element: <TimeSync />,
+      },
+      {
+        path: '/group/:groupId',
         element: <Groups />,
         children: [
           {
-            path: "dashboard/:dashboardId",
+            path: 'dashboard/:dashboardId',
             element: <ContextDashboard />,
           },
         ],
       },
       {
-        path: "device/:deviceId",
+        path: 'device/:deviceId',
         element: <Groups />,
         children: [
           {
-            path: "dashboard/:dashboardId",
+            path: 'dashboard/:dashboardId',
             element: <ContextDashboard />,
           },
         ],
@@ -71,7 +75,7 @@ export const router = createHashRouter([
     ],
   },
   {
-    path: "*",
+    path: '*',
     element: <NotFound />,
   },
 ]);
